@@ -1,20 +1,21 @@
 <!doctype html>
-<?php $colorTheme = get_option('custom_main_options')['display_theme']; ?>
+<?php $CustomMainOptions = get_option('custom_main_options'); ?>
+<?php $colorTheme = $CustomMainOptions ? $CustomMainOptions['display_theme'] : ''; ?>
 <!--[if lt IE 7]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if (IE 7)&!(IEMobile)]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if (IE 8)&!(IEMobile)]><html <?php language_attributes(); ?> class="no-js lt-ie9"><![endif]-->
 <!--[if gt IE 8]><!--> <html <?php language_attributes(); ?> class="guru no-js theme-<?php echo $colorTheme; ?>"><!--<![endif]-->
 
 	<head>
-		<?php if (get_option('custom_main_options')['google_analytics_ID']) { ?>
+		<?php if ($CustomMainOptions && array_key_exists('google_analytics_ID',$CustomMainOptions)) { ?>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo get_option("custom_main_options")["google_analytics_ID"]; ?>"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $CustomMainOptions["google_analytics_ID"]; ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
 
-			gtag('config', '<?php echo get_option("custom_main_options")["google_analytics_ID"]; ?>');
+			gtag('config', '<?php echo $CustomMainOptions["google_analytics_ID"]; ?>');
 		</script>
 		<?php } ?>
 		
@@ -56,8 +57,10 @@
 		<meta name="description" content="<?php echo excerptNoReadMore(get_the_ID()); ?>">
 		<meta property="og:description" content="<?php echo excerptNoReadMore(get_the_ID()); ?>" />
 		<?php } else { ?>
-		<meta name="description" content="<?php echo get_option('custom_main_options')['description']; ?>">
-		<meta property="og:description" content="<?php echo get_option('custom_main_options')['description']; ?>" />
+			<?php if ($CustomMainOptions && array_key_exists('description',$CustomMainOptions)) { ?>
+				<meta name="description" content="<?php echo $CustomMainOptions['description']; ?>">
+				<meta property="og:description" content="<?php echo $CustomMainOptions['description']; ?>" />
+			<?php } ?>
 		<?php } ?>
 
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
